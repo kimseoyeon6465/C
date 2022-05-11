@@ -1,0 +1,113 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+void disp_menu()//메뉴를 출력하는 함수 
+{
+	printf("==================MENU======================\n");
+	printf(" +,  -,  *,  /,  %%  중에 연산자를 선택하세요\n");
+	printf("q또는 Q를 누르면 종료\n");
+	printf("============================================\n");
+}
+
+char getOperator()//연산자를 입력받는 함수 
+{
+	char ch;
+	scanf("%c", &ch);
+	return ch;
+}
+
+int getInteget()//% 연산을 위한 정수 피연산자를 입력받는 함수를 만들었으나 사용하지 않음
+{
+	int i_num;
+	printf("정수를 입력하시오: \n");
+	scanf("%d\n", &i_num);
+	return i_num;
+}
+
+float getRealNum()//+,-,*,/ 연산을 위한 실수 피연산자를 입력받는 함수를 만들었으나 사용하지 않음 
+{
+	float real_num;
+	printf("실수 두개를 입력하시오: \n");
+	scanf("%f\n", &real_num);
+	return real_num;
+}
+
+float addition(float op1, float op2)
+{
+	return (op1 + op2);
+}
+float subtraction(float op1, float op2)
+{
+	return (op1 - op2);
+}
+float multiplication(float op1, float op2)
+{
+	return (op1*op2);
+}
+float division(float op1, float op2)
+{
+	return (op1 / op2);
+}
+int modulo(int i_op1, int i_op2)//모듈러 연산은 피연산자에 실수가 들어갈 수 없음
+{
+	return (i_op1%i_op2);
+}
+
+int main()
+{
+	float op1, op2, result;
+	int i_op1, i_op2, modulo_result;
+	char choice;
+	while (1) 
+	{
+		disp_menu();
+		choice = getOperator();
+		if (choice == 'q' || choice == 'Q')//종료
+			break;
+		else if (choice == '%')//모듈러 연산일 경우는 자료형이 다르므로 else if로 처리
+		{
+			printf("정수 두개를 차례대로 입력하세요: ");
+			scanf("%d %d", &i_op1, &i_op2);
+			modulo_result = modulo(i_op1, i_op2);
+			printf("%d %c %d = %d\n", i_op1, choice, i_op2, modulo_result);
+		}
+		else
+		{
+			switch (choice)
+			{
+			case '+':
+				printf("실수 두개를 차례대로 입력하세요: ");
+				scanf("%f %f", &op1, &op2);
+				result = addition(op1, op2);
+				printf("%f %c %f = %f\n", op1, choice, op2, result);
+				break;
+			case '-':
+				printf("실수 두개를 차례대로 입력하세요: ");
+				scanf("%f %f", &op1, &op2);
+				result = subtraction(op1, op2);
+				printf("%f %c %f = %f\n", op1, choice, op2, result);
+				break;
+			case '*':
+				printf("실수 두개를 차례대로 입력하세요: ");
+				scanf("%f %f", &op1, &op2);
+				result = multiplication(op1, op2);
+				printf("%f %c %f = %f\n", op1, choice, op2, result);
+				break;
+			case '/':
+				printf("실수 두개를 차례대로 입력하세요: ");
+				scanf("%f %f", &op1, &op2);
+				if (op1 == 0 || op2 == 0)//피연산자가 0인 나눗셈 연산은 오류 처리 
+				{
+					printf("ERROR: 피연산자가 잘못되었습니다.\n");
+					break;
+				}
+				result = division(op1, op2);
+				printf("%f %c %f = %f\n", op1, choice, op2, result);
+				break;
+			}
+		}
+		getchar();//엔터키 삭제
+	}
+	return 0;
+}
