@@ -1,0 +1,33 @@
+#define _CRT_SECURE_NO_WANRNINS
+#include <stdio.h>
+
+int get_integet(void) {
+	int n;
+	printf("정수를 입력하시오: ");
+	scanf_s("%d", &n);
+	return n;
+}
+int is_prime(int n) {
+	int i;
+	for (i = 2; i < n; i++) {
+		if (n%i == 0)
+			return 0;
+	}
+	return 1;
+}
+
+void print_prime(int num)//2부터 num사이의 소수를 출력하는 함수 
+{
+	for (int j = 2; j < num; j++)//2부터 num사이의 소수를 검사하기 위한 반복문
+	{
+		is_prime(j);
+		if (is_prime(j) == 1)//is_prime이 1이면 j는 소수이므로 출력
+			printf(" %d ", j);
+	}
+}
+
+int main()
+{
+	int num = get_integet();//사용자로부터 정수를 입력받아 변수 num에 저장
+	print_prime(num);
+}
