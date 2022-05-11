@@ -1,0 +1,109 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+char dic[5][2][30] =
+{ {"book", "책"},
+{"boy", "소년"},
+{"computer", "컴퓨터"},
+{"lanuguage", "언어"},
+{"rain", "비"} };
+
+void draw_menu()
+{
+	printf(" Select Problem(1, 2, 3)\n");
+	printf(" 0을 누르면 종료\n");
+}
+int getOperator()//연산자를 입력받는 함수 
+{
+	int ch;
+	scanf("%d", &ch);
+	return ch;
+}
+
+int count_world(const char* str)//단어의 갯수를 세는 함수
+{
+	int blank = 0;//공백의 갯수를 세는 변수 blank 선언, 중복된 공백도 하나의 공백으로 계산
+	for (int i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] == ' ' || str[i] == '\t')//배열str의 값이 공백이면
+		{
+			blank++;//blank를 증가시킴
+			if (str[i + 1] == ' ' || str[i + 1] == '\t')//공백의 다음글자도 공백이면
+				blank--;//두개의 중복된 공백도 하나로 취급하기위해 blank를 감소시킴
+		}
+	}
+	return blank + 1;//공백의갯수+1이 단어의 갯수
+}
+
+void dictionary(const char* input)//한영 사전 구현
+{
+
+	for (int i = 0; i < 5; i++)
+	{
+		if (strcmp(input, dic[i][0]) == 0)
+		{
+			printf("%s : %s", dic[i][0], dic[i][1]);
+			break;
+		}
+	}
+	return 0;
+}
+void encrypt(char cipher[], int shift)//암호 해독 프로그램 구현
+{
+	char temp[50] = "";
+	for (int i = 0; cipher[i] != '\0'; i++)
+	{
+		if (cipher[i] == ' ')
+			temp[i] = cipher[i];
+		else
+			temp[i] = (char)((int)cipher[i] + shift);
+	}
+	for (int i = 0; temp[i] != '\0'; i++)
+	{
+		cipher[i] = temp[i];
+	}
+}
+
+int main()
+{
+	int choice;
+	int wc;
+	int shift = 3;
+	char cipher[50] = "";
+	char input[50] = "";
+	while (1) {
+		draw_menu();
+		choice = getOperator();
+		if (choice == 0)//종료
+			break;
+		else
+		{
+			switch (choice)
+			{
+			case 1:
+				wc = count_world("the little  book...");
+				printf("%d", wc);
+				printf("\n");
+				break;
+			case 2:
+				printf("단어를 입력하시오: ");
+				getchar();//엔터키 삭제
+				gets_s(input, sizeof(input));
+				dictionary(input, (char*)dic);
+				printf("\n");
+				break;
+			case 3:
+				printf("문자열을 입력하세요: ");
+				getchar();
+				gets_s(cipher, sizeof(cipher));
+				encrypt(cipher, shift);
+				printf("%s", cipher);
+				printf("\n");
+				break;
+
+			}
+		}
+
+	}
+	return 0;
+}
