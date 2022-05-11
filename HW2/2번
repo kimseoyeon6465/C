@@ -1,0 +1,19 @@
+#include <stdio.h>
+#define _CRT_SECURE_NO_WARNINGS
+
+float realNumToInt(int i)
+{
+	return i;
+}
+int intToRealNum(float n)
+{
+	return n;
+}
+int main()
+{
+	printf("반환값이 실수로 정의된 함수로 정수 %d를 반환한 결과: %f\n", 2, realNumToInt(2));
+
+	printf("반환값이 정수로 정의된 함수로 실수 %f를 반환한 결과: %d\n", 2.5, intToRealNum(2.5));
+
+	return 0;
+}
